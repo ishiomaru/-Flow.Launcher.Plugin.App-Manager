@@ -26,10 +26,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Shell API の定数
-SIGDN_FILESYSPATH = 0x80058000  # SIGDN_FILESYSPATH
-SIGDN_NORMALDISPLAY = 0x00000000  # SIGDN_NORMALDISPLAY
-
 # GetDriveType の定数
 DRIVE_REMOVABLE = 2
 DRIVE_REMOTE = 4
@@ -59,34 +55,9 @@ def scan_shell_apps() -> list:
     entries = []
     try:
         import comtypes
-        from comtypes import GUID
         import comtypes.client
 
-        # CLSID_ShellDesktop と IID_IShellFolder
-        CLSID_ShellDesktop = GUID("{00021400-0000-0000-C000-000000000046}")
-
-        # shell:AppsFolder の GUID
-        FOLDERID_AppsFolder = GUID("{1e87508d-89c2-42f0-8a7e-645a0f50ca58}")
-
-        # SHGetKnownFolderIDList を使用
-        shell32 = ctypes.windll.shell32
-        pidl = ctypes.c_void_p()
-        hr = shell32.SHGetKnownFolderIDList(
-            ctypes.byref(FOLDERID_AppsFolder), 0, None, ctypes.byref(pidl)
-        )
-        if hr != 0:
-            logger.warning("SHGetKnownFolderIDList failed: 0x%08x", hr)
-            return entries
-
-        # IShellFolder を取得
-        desktop_folder = ctypes.POINTER(ctypes.c_void_p)()
-        hr = shell32.SHGetDesktopFolder(ctypes.byref(desktop_folder))
-        if hr != 0:
-            logger.warning("SHGetDesktopFolder failed")
-            return entries
-
-        # shell:AppsFolder を explorer 経由で列挙する代替手法
-        # comtypes の高レベル API を使用
+        # Shell.Application COM 経由で shell:AppsFolder を列挙
         try:
             shell = comtypes.client.CreateObject(
                 "Shell.Application", interface=None

@@ -18,6 +18,7 @@ sys.path = [str(plugindir / p) for p in paths] + sys.path
 from flowlauncher import FlowLauncher, FlowLauncherAPI
 
 from app_registry import AppRegistry, get_cache_path
+from models import AppEntry
 from search_handler import SearchHandler
 from execution_handler import ExecutionHandler
 import settings_manager
@@ -166,7 +167,7 @@ class AppManager(FlowLauncher):
                 count = settings_manager.do_import(import_file, cache_data, settings)
                 # マージ結果を保存
                 registry.entries = [
-                    __import__("models").AppEntry.from_dict(e)
+                    AppEntry.from_dict(e)
                     for e in cache_data.get("entries", [])
                 ]
                 registry.save()
