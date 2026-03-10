@@ -1,0 +1,61 @@
+body:
+  - type: textBlock
+    attributes:
+      description: >
+        App Manager はインストール済みアプリケーションを高速に検索・起動するプラグインです。
+
+  - type: textarea
+    attributes:
+      name: alias_map
+      label: エイリアス設定
+      description: >
+        アプリに別名（エイリアス）を設定します。1行に1つ、「アプリ名=エイリアス」の形式で入力してください。
+        複数のエイリアスはカンマ区切りで指定できます。
+        例: Calculator=c,calc
+
+  - type: textarea
+    attributes:
+      name: custom_paths
+      label: カスタムスキャンパス
+      description: >
+        追加でスキャンするディレクトリパスを1行に1つずつ入力してください。
+
+  - type: input
+    attributes:
+      name: stale_threshold_days
+      label: データクレンジング猶予日数
+      description: >
+        外部ドライブのアプリが検出されなくなってから自動削除するまでの猶予日数です。
+      defaultValue: "30"
+
+  - type: input
+    attributes:
+      name: scan_interval_minutes
+      label: 自動スキャン間隔（分）
+      description: >
+        アプリ一覧を自動で再スキャンする間隔です。0にすると毎回スキャンします。
+      defaultValue: "60"
+
+  - type: checkbox
+    attributes:
+      name: scan_registry
+      label: レジストリからもアプリを取得する
+      description: >
+        Shell API で取得できないアプリをレジストリから補完します。
+      defaultValue: true
+
+  - type: inputWithFolderBtn
+    attributes:
+      name: export_folder
+      label: エクスポート先フォルダ
+      description: >
+        フォルダを選択すると、次回のプラグイン使用時に設定と履歴を JSON ファイルとしてエクスポートします。
+        エクスポート完了後、この欄は自動的にクリアされます。
+
+  - type: inputWithFileBtn
+    attributes:
+      name: import_file
+      label: インポートファイル
+      description: >
+        JSON ファイルを選択すると、次回のプラグイン使用時にデータをインポートします。
+        インポート完了後、この欄は自動的にクリアされます。
