@@ -1,13 +1,13 @@
 {
     "$schema": "https://www.flowlauncher.com/schemas/plugin.schema.json",
-    "ID": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "ID": "10de9f66-a967-44ee-872e-c86386cee4fd",
     "ActionKeyword": "ap",
     "Name": "App Manager",
     "Description": "インストール済みアプリケーションを高速に検索・起動するプラグイン",
     "Author": "App Manager Developer",
     "Version": "1.0.0",
     "Language": "python",
-    "Website": "https://github.com/app-manager-plugin",
+    "Website": "https://github.com/ishiomaru/-Flow.Launcher.Plugin.App-Manager",
     "IcoPath": "Images\\app.png",
     "ExecuteFileName": "main.py"
 }
