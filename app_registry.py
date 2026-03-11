@@ -175,9 +175,18 @@ class AppRegistry:
         except (ValueError, TypeError):
             return True
 
-    def get_active_entries(self) -> list[AppEntry]:
-        """ブラックリスト除外済みのエントリリストを返す。"""
-        return [e for e in self.entries if not e.is_blacklisted]
+    def get_active_entries(self, blacklist_names: set = None) -> list[AppEntry]:
+        """ブラックリスト除外済みのエントリリストを返す。
+
+        Args:
+            blacklist_names: 設定画面で指定されたブラックリストのアプリ名セット（小文字）。
+        """
+        if blacklist_names is None:
+            blacklist_names = set()
+        return [
+            e for e in self.entries
+            if not e.is_blacklisted and e.name.lower() not in blacklist_names
+        ]
 
 
 def get_cache_path() -> str:

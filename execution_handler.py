@@ -5,6 +5,7 @@
 """
 
 import os
+import sys
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -72,11 +73,15 @@ class ExecutionHandler:
         Args:
             app_id: アプリケーションの一意識別子。
         """
+        print(f"[AppManager] toggle_pin called: {app_id}", file=sys.stderr)
         registry = AppRegistry.load()
         entry = registry.get(app_id)
         if entry is not None:
             entry.is_pinned = not entry.is_pinned
             registry.save()
+            print(f"[AppManager] toggle_pin done: is_pinned={entry.is_pinned}", file=sys.stderr)
+        else:
+            print(f"[AppManager] toggle_pin: entry not found for {app_id}", file=sys.stderr)
 
     @staticmethod
     def add_to_blacklist(app_id: str):
@@ -85,8 +90,12 @@ class ExecutionHandler:
         Args:
             app_id: アプリケーションの一意識別子。
         """
+        print(f"[AppManager] add_to_blacklist called: {app_id}", file=sys.stderr)
         registry = AppRegistry.load()
         entry = registry.get(app_id)
         if entry is not None:
             entry.is_blacklisted = True
             registry.save()
+            print(f"[AppManager] add_to_blacklist done: {entry.name}", file=sys.stderr)
+        else:
+            print(f"[AppManager] add_to_blacklist: entry not found for {app_id}", file=sys.stderr)

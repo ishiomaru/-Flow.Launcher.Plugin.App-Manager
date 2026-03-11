@@ -58,8 +58,11 @@ class AppManager(FlowLauncher):
         alias_map = settings_manager.parse_alias_map(alias_text)
         registry.apply_aliases(alias_map)
 
+        # --- ブラックリスト（設定画面）の取得 ---
+        blacklist_names = settings_manager.get_blacklist_names(settings)
+
         # --- 検索実行 ---
-        active_entries = registry.get_active_entries()
+        active_entries = registry.get_active_entries(blacklist_names)
         results = SearchHandler.search(active_entries, query, alias_map)
 
         return results

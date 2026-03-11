@@ -168,6 +168,7 @@ class SearchHandler:
             "SubTitle": subtitle,
             "IcoPath": ico_path,
             "Score": score,
+            "AutoCompleteText": f"ap {display_title}",
             "ContextData": [entry.id],
             "JsonRPCAction": {
                 "method": "execute",

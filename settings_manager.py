@@ -90,6 +90,19 @@ def get_custom_paths(settings: dict) -> list:
     return paths
 
 
+def get_blacklist_names(settings: dict) -> set:
+    """設定画面のブラックリストからアプリ名セットを取得する。"""
+    blacklist_text = settings.get("blacklist_names", "")
+    if not blacklist_text:
+        return set()
+    names = set()
+    for line in blacklist_text.strip().splitlines():
+        line = line.strip()
+        if line:
+            names.add(line.lower())
+    return names
+
+
 def get_scan_interval(settings: dict) -> int:
     """自動スキャン間隔（分）を取得する。デフォルト 60。"""
     try:

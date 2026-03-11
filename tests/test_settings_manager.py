@@ -149,3 +149,26 @@ class TestExportImport:
             assert cache_data["entries"][0]["last_used"] == "2026-02-01T00:00:00Z"
             assert cache_data["entries"][0]["is_pinned"] is True
             assert settings["alias_map"] == "App One=a1"
+
+
+class TestGetBlacklistNames:
+    """ブラックリスト名取得のテスト。"""
+
+    def test_basic_blacklist(self):
+        settings = {"blacklist_names": "App One\nApp Two"}
+        result = settings_manager.get_blacklist_names(settings)
+        assert result == {"app one", "app two"}
+
+    def test_empty_blacklist(self):
+        assert settings_manager.get_blacklist_names({}) == set()
+        assert settings_manager.get_blacklist_names({"blacklist_names": ""}) == set()
+
+    def test_whitespace_handling(self):
+        settings = {"blacklist_names": "  App One  \n\n  App Two  \n"}
+        result = settings_manager.get_blacklist_names(settings)
+        assert result == {"app one", "app two"}
+
+    def test_case_insensitive(self):
+        settings = {"blacklist_names": "Calculator"}
+        result = settings_manager.get_blacklist_names(settings)
+        assert "calculator" in result

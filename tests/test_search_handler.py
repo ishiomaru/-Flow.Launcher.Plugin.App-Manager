@@ -144,3 +144,19 @@ class TestResultBuilding:
         assert action["method"] == "execute"
         assert action["parameters"] == ["my_app"]
         assert action["dontHideAfterAction"] is False
+
+    def test_auto_complete_text(self):
+        """AutoCompleteText が正しく設定される。"""
+        entries = [make_entry(id="my_app", name="My App")]
+        results = SearchHandler.search(entries, "")
+        assert results[0]["AutoCompleteText"] == "ap My App"
+
+    def test_auto_complete_text_with_alias(self):
+        """エイリアスタイトルの場合も AutoCompleteText が正しく設定される。"""
+        entries = [make_entry(id="calc", name="Calculator")]
+        alias_map = {"calculator": ["c"]}
+        results = SearchHandler.search(entries, "c", alias_map)
+        # エイリアス完全一致の結果
+        exact = [r for r in results if r["Score"] == 100]
+        assert len(exact) == 1
+        assert exact[0]["AutoCompleteText"] == "ap c"

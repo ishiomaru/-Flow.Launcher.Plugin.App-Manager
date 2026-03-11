@@ -15,6 +15,14 @@ body:
 
   - type: textarea
     attributes:
+      name: blacklist_names
+      label: ブラックリスト
+      description: >
+        検索結果から除外するアプリ名を1行に1つずつ入力してください。
+        コンテキストメニューからブラックリストに追加したアプリとは別に管理されます。
+
+  - type: textarea
+    attributes:
       name: custom_paths
       label: カスタムスキャンパス
       description: >
