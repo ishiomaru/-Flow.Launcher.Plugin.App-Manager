@@ -43,4 +43,4 @@ jobs:
           files: 'Flow.Launcher.Plugin.AppManager.zip'
           tag_name: "v${{steps.version.outputs.prop}}"
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
